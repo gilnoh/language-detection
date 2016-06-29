@@ -62,6 +62,7 @@ public class Detector {
     private static final double CONV_THRESHOLD = 0.99999;
     private static final int BASE_FREQ = 10000;
     private static final String UNKNOWN_LANG = "unknown";
+    private static final int SHORT_TEXT_LENGTH = 15;
 
     private static final Pattern URL_REGEX = Pattern.compile("https?://[-_.?&~;+=/#0-9A-Za-z]{1,2076}");
     private static final Pattern MAIL_REGEX = Pattern.compile("[-_.0-9A-Za-z]{1,64}@[-_0-9A-Za-z]{1,255}[-_.0-9A-Za-z]{1,255}");
@@ -225,6 +226,8 @@ public class Detector {
     }
     
     /**
+     *
+     *
      * @throws LangDetectException 
      * 
      */
@@ -233,7 +236,14 @@ public class Detector {
         ArrayList<String> ngrams = extractNGrams();
         if (ngrams.size()==0)
             throw new LangDetectException(ErrorCode.CantDetectError, "no features in text");
-        
+
+        // If the text is short, no need to do random sampling.
+        // (another alternative would be ngrams.size() < ITERATION_LIMIT)
+        if (this.text.length() < SHORT_TEXT_LENGTH) {
+            linearDetect(ngrams);
+            return;
+        }
+
         langprob = new double[langlist.size()];
 
         Random rand = new Random();
@@ -253,6 +263,34 @@ public class Detector {
             for(int j=0;j<langprob.length;++j) langprob[j] += prob[j] / n_trial;
             if (verbose) System.out.println("==> " + sortProbability(prob));
         }
+    }
+
+    /**
+     * Non-randomized, deterministic linear detection. Iterating over all ngrams. Used only when text is short.
+     * The method has been added to remove the effect of false-confidence, caused by re-visiting same n-gram again
+     * and again on very short text (e.g. increamental input starting from one-word, etc)
+     *
+     */
+    private void linearDetect(ArrayList<String> ngrams) {
+        langprob = new double[langlist.size()];
+        Random rand = new Random();
+        if (seed != null) rand.setSeed(seed);
+
+        double[] prob = initProbability();
+        double alpha = this.alpha; // Here, we use fixed smoothing param alpha, as-is.
+
+        // Here we walk over each and every ngram just once.
+        for (int i=0; i < ngrams.size(); i++) {
+            updateLangProb(prob, ngrams.get(i), alpha);
+            if (i % 5 == 0) {
+                 normalizeProb(prob); // call this sometime, is required also to prevent underflow ...
+                if (verbose) System.out.println("> " + sortProbability(prob));
+            }
+        }
+        // final normalization, and store the result
+        normalizeProb(prob);
+        if (verbose) System.out.println("==> " + sortProbability(prob));
+        for(int j=0;j<langprob.length;++j) langprob[j] += prob[j];
     }
 
     /**
@@ -331,7 +369,7 @@ public class Detector {
     }
 
     /**
-     * @param probabilities HashMap
+     * @param prob HashMap
      * @return lanugage candidates order by probabilities descendently
      */
     private ArrayList<Language> sortProbability(double[] prob) {
