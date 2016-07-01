@@ -62,7 +62,7 @@ public class Detector {
     private static final double CONV_THRESHOLD = 0.99999;
     private static final int BASE_FREQ = 10000;
     private static final String UNKNOWN_LANG = "unknown";
-    private static final int SHORT_TEXT_LENGTH = 15;
+    private static final int DEFAULT_SHORT_TEXT_THRESHOLD = 15;
 
     private static final Pattern URL_REGEX = Pattern.compile("https?://[-_.?&~;+=/#0-9A-Za-z]{1,2076}");
     private static final Pattern MAIL_REGEX = Pattern.compile("[-_.0-9A-Za-z]{1,64}@[-_0-9A-Za-z]{1,255}[-_.0-9A-Za-z]{1,255}");
@@ -74,6 +74,7 @@ public class Detector {
     private double[] langprob = null;
 
     private double alpha = ALPHA_DEFAULT;
+    private int shortTextThreshold = DEFAULT_SHORT_TEXT_THRESHOLD;
     private int n_trial = 7;
     private int max_text_length = 10000;
     private double[] priorMap = null;
@@ -97,6 +98,11 @@ public class Detector {
      */
     public void setVerbose() {
         this.verbose = true;
+    }
+
+
+    public void setShortTextThreshold(int length) {
+        this.shortTextThreshold=length;
     }
 
     /**
@@ -239,7 +245,7 @@ public class Detector {
 
         // If the text is short, no need to do random sampling.
         // (another alternative would be ngrams.size() < ITERATION_LIMIT)
-        if (this.text.length() < SHORT_TEXT_LENGTH) {
+        if (this.text.length() < this.shortTextThreshold) {
             linearDetect(ngrams);
             return;
         }
