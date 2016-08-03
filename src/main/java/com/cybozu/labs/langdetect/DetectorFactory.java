@@ -3,6 +3,8 @@ package com.cybozu.labs.langdetect;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.arnx.jsonic.JSON;
@@ -196,9 +198,12 @@ public class DetectorFactory {
     }
     
     /**
-     * @return languages list in profiles
+     * @return languages list in profiles, sorted in alphabetic order
      */
     public static final List<String> getLangList() {
-        return instance_.profiles.getLangList();
+        List<String> languageList = instance_.profiles.getLangList(); // profiles return an unmodifiable list
+        List<String> sortedLanguageList = new ArrayList<String>(languageList);
+        Collections.sort(sortedLanguageList);
+        return sortedLanguageList;
     }
 }
