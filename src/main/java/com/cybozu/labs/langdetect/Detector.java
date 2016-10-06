@@ -58,11 +58,11 @@ public class Detector {
     private static final double ALPHA_WIDTH = 0.05;
 
     private static final int ITERATION_LIMIT = 1000;
-    private static final double PROB_THRESHOLD = 0.1;
+    private static final double PROB_THRESHOLD = 0.02; // report any language with more than 2% prob
     private static final double CONV_THRESHOLD = 0.99999;
     private static final int BASE_FREQ = 10000;
     private static final String UNKNOWN_LANG = "unknown";
-    private static final int DEFAULT_SHORT_TEXT_THRESHOLD = 15;
+    private static final int DEFAULT_NORANDOM_THRESHOLD = 100; // text shorter than this won't be detected by random.
 
     private static final Pattern URL_REGEX = Pattern.compile("https?://[-_.?&~;+=/#0-9A-Za-z]{1,2076}");
     private static final Pattern MAIL_REGEX = Pattern.compile("[-_.0-9A-Za-z]{1,64}@[-_0-9A-Za-z]{1,255}[-_.0-9A-Za-z]{1,255}");
@@ -74,7 +74,7 @@ public class Detector {
     private double[] langprob = null;
 
     private double alpha = ALPHA_DEFAULT;
-    private int shortTextThreshold = DEFAULT_SHORT_TEXT_THRESHOLD;
+    private int shortTextThreshold = DEFAULT_NORANDOM_THRESHOLD;
     private int n_trial = 7;
     private int max_text_length = 10000;
     private double[] priorMap = null;
@@ -101,7 +101,7 @@ public class Detector {
     }
 
 
-    public void setShortTextThreshold(int length) {
+    public void noRandomForTextShoterThan(int length) {
         this.shortTextThreshold=length;
     }
 
