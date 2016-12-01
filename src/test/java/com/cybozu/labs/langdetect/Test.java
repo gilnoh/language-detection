@@ -46,6 +46,9 @@ class Test {
             a.detectLangs("Hallo, ich wollte mir gerade die Brille Cremona in bordeaux kaufen");
             a.detectLangs("ich wollte mir gerade die Brille Cremona in bordeaux kaufen");
             a.detectLangs("Hallo, Guten Tag.");
+            a.detectLangs("Führe ich ein Export(Mixdown) durch, sind dort plötzlich 3 von 10 videos schwarz.");
+            a.detectLangs("This is just a test question.");
+            a.detectLangs("I like my music.");
 
         } catch (Exception e) {
             System.out.println(e.fillInStackTrace());

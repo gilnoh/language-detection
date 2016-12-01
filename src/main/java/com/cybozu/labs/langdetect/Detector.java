@@ -58,7 +58,7 @@ public class Detector {
     private static final double ALPHA_WIDTH = 0.05;
 
     private static final int ITERATION_LIMIT = 1000;
-    private static final double PROB_THRESHOLD = 0.02; // report any language with more than 2% prob
+    private static final double PROB_THRESHOLD = 0.001; // report any language with more than 0.1% prob
     private static final double CONV_THRESHOLD = 0.99999;
     private static final int BASE_FREQ = 10000;
     private static final String UNKNOWN_LANG = "unknown";
