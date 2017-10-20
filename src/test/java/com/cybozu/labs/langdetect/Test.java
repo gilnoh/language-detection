@@ -30,7 +30,7 @@ class Test {
         Test a = new Test();
 
         try {
-            a.init("/home/tailblues/omq/language-detection/src/main/resources/profiles");
+            a.init("/Users/tailblues/omq/language-detection/src/main/resources/profiles");
 
             a.detectLangs("Hallo, wer kann mir helfen");
             a.detectLangs("lieber Kundenservice, habe gestern meine Brille");
@@ -49,6 +49,8 @@ class Test {
             a.detectLangs("Führe ich ein Export(Mixdown) durch, sind dort plötzlich 3 von 10 videos schwarz.");
             a.detectLangs("This is just a test question.");
             a.detectLangs("I like my music.");
+            a.detectLangs("Wann kommt mein Paket");
+            a.detectLangs("Wann kommt mein Paket?");
 
         } catch (Exception e) {
             System.out.println(e.fillInStackTrace());
