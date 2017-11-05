@@ -52,6 +52,7 @@ class Test {
             a.detectLangs("Wann kommt mein Paket");
             a.detectLangs("Wann kommt mein Paket?");
 
+            a.detectLangs("I 1877 forlod Brandes København og bosatte sig i Berlin. Hans politiske synspunkter gjorde dog, at Preussen blev ubehagelig for ham at opholde sig i, og han vendte i 1883 tilbage til København, hvor han blev mødt af en helt ny gruppe af forfattere og tænkere, der var ivrige efter at modtage ham som deres leder. Det vigtigste af hans senere arbejder har været hans værk om William Shakespeare, der blev oversat til engelsk af William Archer og med det samme blev anerkendt.\n");
         } catch (Exception e) {
             System.out.println(e.fillInStackTrace());
         }
