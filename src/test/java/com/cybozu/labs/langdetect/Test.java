@@ -30,7 +30,7 @@ class Test {
         Test a = new Test();
 
         try {
-            a.init("/Users/tailblues/omq/language-detection/src/main/resources/profiles");
+            a.init("/home/tailblues/omq/language-detection/src/main/resources/profiles");
 
             a.detectLangs("Hallo, wer kann mir helfen");
             a.detectLangs("lieber Kundenservice, habe gestern meine Brille");
@@ -53,6 +53,12 @@ class Test {
             a.detectLangs("Wann kommt mein Paket?");
 
             a.detectLangs("I 1877 forlod Brandes København og bosatte sig i Berlin. Hans politiske synspunkter gjorde dog, at Preussen blev ubehagelig for ham at opholde sig i, og han vendte i 1883 tilbage til København, hvor han blev mødt af en helt ny gruppe af forfattere og tænkere, der var ivrige efter at modtage ham som deres leder. Det vigtigste af hans senere arbejder har været hans værk om William Shakespeare, der blev oversat til engelsk af William Archer og med det samme blev anerkendt.\n");
+            a.detectLangs("VIDEO DE LUXE PREMIUM NON PERMETTEVA  PIU DI ESSERE APERTO INDICANDO UN CODICE DI ERRORE \n" +
+                    "59  HO DOVUTO REINSTALLARLO MA CARICANDO I PROGETTI REALIZZATI IN PRECEDENZA ALL'ERRORE\n" +
+                    "NON LI RICONOSCE PIU' SALTANDO ALCUNE TRANSIZIONI CHE AVEVO IMPOSTATO  AVENDO SCARICATO UN\n" +
+                    "PACCHETTO (VIDEO DELUXE CONTENT PACK PREMIUM 2018)  CON CODICE  BUONO\n" +
+                    "(G3-TDTRH-G2FCG-R2XTL-5Q239) CHE NON MI PERMETTE PIU DI SCARICARE PERCHE IL CODICE BUONO\n" +
+                    "RISULTA GIA' UTILIZZATO.\n");
         } catch (Exception e) {
             System.out.println(e.fillInStackTrace());
         }
